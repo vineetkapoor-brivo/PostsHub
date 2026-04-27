@@ -30,14 +30,14 @@ Data is fetched from [DummyJSON](https://dummyjson.com) (`/posts`, `/posts/searc
 
 ## The challenge
 
-The app builds and runs, but contains **14 intentional bugs**. They fall into these categories:
+The app builds and runs, but contains more than **10 intentional bugs**. They fall into these categories:
 
-- 2 UI / layout bugs
-- 2 State-management bugs
-- 2 Codable / decoding bugs
-- 2 Crash bugs
-- 2 Performance or threading bugs
-- 4 Mixed bonus bugs (SwiftUI identity, animations, search, async)
+- UI / layout bugs
+- State-management bugs
+- Codable / decoding bugs
+- Crash bugs
+- Performance or threading bugs
+- Mixed bonus bugs (SwiftUI identity, animations, search, async)
 
 For each bug you find, please explain:
 1. What you observed.
