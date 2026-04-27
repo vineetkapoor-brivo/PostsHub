@@ -12,7 +12,7 @@ final class PostStore: ObservableObject {
     private var searchTask: Task<Void, Never>?
 
     init() {
-//        startAutoRefresh()
+        startAutoRefresh()
     }
 
     private func startAutoRefresh() {
