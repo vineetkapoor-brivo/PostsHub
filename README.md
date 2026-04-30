@@ -44,4 +44,46 @@ For each bug you find, please explain:
 2. What is causing it.
 3. How you would fix it (and why your fix is the right one).
 
-Watch the Xcode console while you exercise the app — several bugs surface there first.
+Watch the Xcode console while you exercise the app — several bugs surface there first. Logs use Apple's unified logging (`os.Logger`) under the subsystem `com.brivo.claude.postshub`. Useful categories: `App`, `API`, `Store`, `List`, `Detail`, `Row`, `Favorites`, `Filter`. You can filter in Console.app or in Xcode's debug area.
+
+Tip: long‑press the filter button (top‑right of the Posts tab) for ~1 second to dump the current `PostStore` state to the log.
+
+### Sample API responses
+
+`GET https://dummyjson.com/posts?limit=1`
+```json
+{
+  "posts": [
+    {
+      "id": 1,
+      "title": "His mother had always taught him",
+      "body": "His mother had always taught him not to ever think of himself as better than others...",
+      "tags": ["history", "american", "crime"],
+      "reactions": { "likes": 192, "dislikes": 25 },
+      "views": 305,
+      "userId": 121
+    }
+  ],
+  "total": 251, "skip": 0, "limit": 1
+}
+```
+
+`GET https://dummyjson.com/users?limit=1`
+```json
+{
+  "users": [
+    {
+      "id": 1,
+      "firstName": "Emily", "lastName": "Johnson", "username": "emilys",
+      "email": "emily.johnson@x.dummyjson.com", "phone": "+81 965-431-3024",
+      "image": "https://dummyjson.com/icon/emilys/128",
+      "address": {
+        "address": "626 Main Street", "city": "Phoenix", "state": "OK",
+        "postalCode": "31313",
+        "coordinates": { "lat": -77.16482, "lng": -92.084824 }
+      }
+    }
+  ],
+  "total": 208, "skip": 0, "limit": 1
+}
+```

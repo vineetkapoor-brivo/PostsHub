@@ -20,6 +20,16 @@ import SwiftUI
 
 @main
 struct PostsHubApp: App {
+    init() {
+        let info = Bundle.main.infoDictionary ?? [:]
+        let version = info["CFBundleShortVersionString"] as? String ?? "?"
+        let build = info["CFBundleVersion"] as? String ?? "?"
+        let os = ProcessInfo.processInfo.operatingSystemVersionString
+        Log.app.event("──── PostsHub launching ────")
+        Log.app.event("version=\(version) build=\(build) os=\(os)")
+        Log.app.event("baseURL=https://dummyjson.com")
+    }
+
     var body: some Scene {
         WindowGroup {
             RootTabView()

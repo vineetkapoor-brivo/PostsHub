@@ -11,6 +11,7 @@ struct PostDetailView: View {
         self.post = post
         self._draft = State(initialValue: post)
         let raw = "https://avatars.example.com/user \(post.userId).png"
+        Log.detail.event("init post=\(post.id) userId=\(post.userId) avatarRaw='\(raw)'")
         self._avatarURL = State(initialValue: URL(string: raw, encodingInvalidCharacters: false)!)
     }
 
@@ -47,11 +48,13 @@ struct PostDetailView: View {
 
             Section {
                 Button {
+                    let wasFav = store.favoriteIds.contains(post.id)
                     if store.favoriteIds.contains(post.id) {
                         store.favoriteIds.remove(post.id)
                     } else {
                         store.favoriteIds.insert(post.id)
                     }
+                    Log.detail.event("favorite tap id=\(post.id) wasFav=\(wasFav) nowFav=\(store.favoriteIds.contains(post.id))")
                 } label: {
                     Label(
                         store.favoriteIds.contains(post.id) ? "Remove from Favorites" : "Add to Favorites",
@@ -60,6 +63,7 @@ struct PostDetailView: View {
                 }
 
                 Button("Save Changes") {
+                    Log.detail.event("Save tapped id=\(post.id) titleChanged=\(draft.title != post.title) bodyChanged=\(draft.body != post.body) titleLen=\(draft.title.count) bodyLen=\(draft.body.count)")
                     showSavedToast = true
                 }
                 .disabled(draft == post)
@@ -67,6 +71,12 @@ struct PostDetailView: View {
         }
         .navigationTitle("Post #\(post.id)")
         .navigationBarTitleDisplayMode(.inline)
+        .onAppear {
+            Log.detail.event("onAppear id=\(post.id) usersLoaded=\(store.users.count)")
+        }
+        .onDisappear {
+            Log.detail.event("onDisappear id=\(post.id) draftDirty=\(draft != post)")
+        }
         .overlay(alignment: .top) {
             if showSavedToast {
                 Text("Saved")

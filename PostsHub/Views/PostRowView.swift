@@ -17,6 +17,7 @@ struct PostRowView: View {
             Spacer()
             Button {
                 isFavorite.toggle()
+                Log.row.event("heart tap id=\(post.id) localFav=\(isFavorite) storeFav=\(store.favoriteIds.contains(post.id))")
                 if isFavorite {
                     store.favoriteIds.insert(post.id)
                 } else {
@@ -30,5 +31,11 @@ struct PostRowView: View {
         }
         .frame(height: 44)
         .contentShape(Rectangle())
+        .onAppear {
+            Log.row.event("onAppear id=\(post.id) localFav=\(isFavorite) storeFav=\(store.favoriteIds.contains(post.id))")
+        }
+        .onDisappear {
+            Log.row.event("onDisappear id=\(post.id) localFav=\(isFavorite) storeFav=\(store.favoriteIds.contains(post.id))")
+        }
     }
 }

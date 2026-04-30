@@ -32,6 +32,9 @@ struct FavoritesView: View {
             .navigationDestination(for: Post.self) { post in
                 PostDetailView(post: post)
             }
+            .onAppear {
+                Log.favorites.event("onAppear count=\(favorites.count) ids=\(Array(store.favoriteIds).sorted()) postsLoaded=\(store.posts.count)")
+            }
         }
     }
 }

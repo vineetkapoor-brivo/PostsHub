@@ -9,6 +9,7 @@ struct UserFilterSheet: View {
         NavigationStack {
             List {
                 Button {
+                    Log.filter.event("selected: All Users (clear)")
                     selectedUserId = nil
                     dismiss()
                 } label: {
@@ -23,6 +24,7 @@ struct UserFilterSheet: View {
 
                 ForEach(store.users) { user in
                     Button {
+                        Log.filter.event("selected userId=\(user.id) name='\(user.name)' usersLoaded=\(store.users.count)")
                         selectedUserId = user.id
                         dismiss()
                     } label: {
@@ -47,6 +49,9 @@ struct UserFilterSheet: View {
                 ToolbarItem(placement: .topBarTrailing) {
                     Button("Done") { dismiss() }
                 }
+            }
+            .onAppear {
+                Log.filter.event("sheet appear usersLoaded=\(store.users.count)")
             }
         }
     }
