@@ -19,19 +19,8 @@ actor APIClient {
     func fetchPosts() async throws -> [Post] {
         var components = URLComponents(url: baseURL.appendingPathComponent("posts"), resolvingAgainstBaseURL: false)!
         components.queryItems = [URLQueryItem(name: "limit", value: "100")]
-        let url = components.url!
-        Log.api.event("GET \(url.absoluteString)")
-        let (data, response) = try await URLSession.shared.data(from: url)
-        let status = (response as? HTTPURLResponse)?.statusCode ?? -1
-        Log.api.event("← posts status=\(status) bytes=\(data.count)")
-        do {
-            let posts = try decoder.decode(PostsResponse.self, from: data).posts
-            Log.api.event("decoded posts count=\(posts.count)")
-            return posts
-        } catch {
-            Log.dumpDecodingError(error, data: data, logger: Log.api)
-            throw error
-        }
+        let (data, _) = try await URLSession.shared.data(from: components.url!)
+        return try decoder.decode(PostsResponse.self, from: data).posts
     }
 
     func fetchUsers() async throws -> [User] {
